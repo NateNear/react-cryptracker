@@ -1,10 +1,12 @@
-import Sidenav from "../../components/sidenav"
+import DashboardLayout from "../../components/dashboardLayout"
+import PortfolioSec from "./portfolioSec"
+
 
 function Dashboard() {
   return (
-    <div>
-        <Sidenav/>
-    </div>
+    <DashboardLayout title="Dashboard">
+      <PortfolioSec/>
+    </DashboardLayout>
   )
 }
 
