@@ -37,8 +37,8 @@ const theme = extendTheme({
       },
       h2: {
         fontSize: {
-          base: "24px",
-          md: "28px",
+          base: "22px",
+          md: "24px",
         },
         color: "p.black",
         lineHeight: { base: "28px", md: "32px" },

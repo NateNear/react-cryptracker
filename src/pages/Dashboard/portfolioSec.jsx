@@ -12,7 +12,7 @@ const PortfolioSection = () => {
       borderRadius="xl"
       p="6"
       align={{
-        base: "flex-start",
+        base: "center",
         xl: "center",
       }}
       flexDir={{
@@ -30,7 +30,7 @@ const PortfolioSection = () => {
           xl: 16,
         }}
         align={{
-          base: "flex-start",
+          base: "center",
           xl: "center",
         }}
         flexDir={{
@@ -53,7 +53,7 @@ const PortfolioSection = () => {
             <Text fontSize="sm">Wallet Balances</Text>
           </HStack>
           <HStack
-            spacing={2}
+            spacing={8}
             align={{
               base: "flex-start",
               sm: "center",

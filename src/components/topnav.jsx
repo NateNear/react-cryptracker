@@ -8,8 +8,27 @@ import {
   MenuItem,
 } from '@chakra-ui/react'
 import { AiOutlineMenu } from "react-icons/ai"
+import { useNavigate } from 'react-router-dom'
+import { getAuth, signOut } from "firebase/auth";
 
 function Topnav({ title, onOpen }) {
+  const navigate = useNavigate();
+  function handleLogout() {
+    const auth = getAuth();
+  
+    signOut(auth)
+      .then(() => {
+        navigate('/signup')
+        // Logout was successful
+        // You can redirect the user to the login page or perform any other necessary actions
+      })
+      .catch((error) => {
+        // Handle any errors that occur during logout
+        console.error("Error during logout:", error);
+      });
+  }
+
+
   return (
   <Box px={"4"} bgColor={"#fff"}>
 
@@ -25,11 +44,11 @@ function Topnav({ title, onOpen }) {
       
       <Menu>
       
-        <MenuButton as={Button}>
+        <MenuButton as={Button} bg={"blackAlpha.400"}>
           <Icon as={FaUserNinja} />
         </MenuButton>
         <MenuList>
-          <MenuItem>Logout</MenuItem>
+          <MenuItem onClick={handleLogout}>Logout</MenuItem>
           <MenuItem>Support</MenuItem>
         </MenuList>
       
