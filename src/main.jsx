@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import Show from './pages/CoinPage/Show.jsx';
@@ -10,40 +10,43 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import Transaction from './pages/Transaction/transaction.jsx';
 import SignUp from '../firebase-auth/components/signUp.jsx';
 import Login from '../firebase-auth/components/login.jsx';
-import useAuth from '../firebase-auth/protect.js';
-import PropTypes from 'prop-types';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../firebase-auth/firebase.js';
 
-const ProtectedRoute = ({ element }) => {
-  const user = useAuth();
+const Main = () => {
+  const [user, setUser] = useState(null);
 
-  if (!user) {
-    // Redirect to the login page if the user is not authenticated
-    return <Navigate to="/signup" />;
-  }
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    });
 
-  return element;
+    return () => unsubscribe();
+  }, []);
+
+  return (
+    <Routes>
+      <Route
+        path="/"
+        element={user ? <App /> : <Navigate to="/signup" />}
+      />
+      <Route path="/:id" element={<Show />} />
+      <Route path="/transactions" element={<Transaction />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<SignUp />} />
+    </Routes>
+  );
 };
-
-// Add PropTypes validation for the 'element' prop
-ProtectedRoute.propTypes = {
-  element: PropTypes.element.isRequired,
-};
-
-export default ProtectedRoute;
-
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
       <Router>
-        <Routes>
-          {/* Use the ProtectedRoute for your protected routes */}
-          <Route path="/" element={<ProtectedRoute element={<App />} />} />
-          <Route path="/:id" element={<Show />} />
-          <Route path="/transactions" element={<Transaction />} />
-          <Route path='/login' element={<Login/>}/>
-          <Route path='/signup' element={<SignUp/>}/>
-        </Routes>
+        <Main />
       </Router>
     </ChakraProvider>
   </React.StrictMode>,
