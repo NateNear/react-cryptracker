@@ -6,7 +6,7 @@ import DashboardLayout from '../../components/dashboardLayout'
 
 function Transaction() {
   const [initialPrice, setInitialPrice] = useState("");
-  const [stockQuantity, setStockQuantity] = useState("");
+  const [cryptoQuantity, setcryptoQuantity] = useState("");
   const [currentPrice, setCurrentPrice] = useState("");
   const [output, setOutput] = useState("");
   const [outputColor, setOutputColor] = useState("black");
@@ -14,7 +14,7 @@ function Transaction() {
 
   const calculateProfitAndLoss = () => {
     const ip = parseFloat(initialPrice);
-    const qty = parseInt(stockQuantity);
+    const qty = parseInt(cryptoQuantity);
     const curr = parseFloat(currentPrice);
 
     if (isNaN(ip) || isNaN(qty) || isNaN(curr)) {
@@ -67,13 +67,13 @@ function Transaction() {
             mb={2}
           />
 
-          <label htmlFor="stock-quantity">Quantity of Crypto-currency</label>
+          <label htmlFor="crypto-quantity">Quantity of Crypto-currency</label>
           <Input
             type="number"
-            id="stock-quantity"
+            id="crypto-quantity"
             placeholder="Enter the number of Coins bought here"
-            value={stockQuantity}
-            onChange={(e) => setStockQuantity(e.target.value)}
+            value={cryptoQuantity}
+            onChange={(e) => setcryptoQuantity(e.target.value)}
             mb={2}
           />
 
